@@ -1,26 +1,42 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rememberme</title>
-  <link rel="stylesheet" href="reset.css">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <main>
-    <div class="subject">우리는 어떻게 살아야 하는가?</div>
-    <form action="" class="form_input">
-      <textarea name="content" id="content" cols="30" rows="10" placeholder="관련 내용을 작성해 주세요"></textarea>
-      <input type="submit" class="submit_btn">
-    </form>
-  </main> 
-  <aside class="preSubmission active">
-    <div class="prev">이전 작성 1</div>
-    <div class="prev">이전 작성 2</div>
-  </aside>
-
-  <script src="script.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/282a5a4afd.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Rememberme</title>
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <div class="subject">우리는 어떻게 살아야 하는가?</div>
+      <form action="" class="form_input">
+        <textarea
+          name="content"
+          id="content"
+          cols="30"
+          rows="10"
+          placeholder="관련 내용을 작성해 주세요"
+        ></textarea>
+        <input type="submit" class="submit_btn" />
+      </form>
+      <div class="left_button">
+        <i class="fa-solid fa-angles-left"></i>
+      </div>
+    </main>
+    <aside class="preSubmission active">
+      <div class="right_button">
+        <i class="fa-solid fa-angles-right"></i>
+      </div>
+      <div class="title">이전 작성 내용</div>
+      <div class="prev">이전 작성 1</div>
+      <div class="prev">이전 작성 2</div>
+    </aside>
+    <script src="script.js"></script>
+  </body>
 </html>

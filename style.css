@@ -33,6 +33,7 @@ main{
   margin-bottom: 40px;
   margin-top:40px;
   border-radius: 10px;
+  font-size: 2em;
 }
 
 .form_input{
@@ -49,12 +50,16 @@ textarea{
   width:80%;
   height:50%;
   border-radius: 10px;
+  font-size: 2em;
 }
 
 .submit_btn{
   position:absolute;
   right:20px;
   bottom:20px;
+  width: 100px;
+  height:50px;
+  font-size: 1.5em;
 }
 
 .preSubmission.active{
@@ -62,10 +67,16 @@ textarea{
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 30px;
+  padding-top: 1.5%;
   width:300px;
   height:100%;
   transition-duration: 1000;
+  position:relative;
+}
+
+.title{
+  font-size: 1.5em;
+  margin-bottom: 20px;
 }
 
 .preSubmission{
@@ -83,6 +94,23 @@ textarea{
   border-radius:10px;
   background-color: #f5e6ab;
   font-size: 9px;
+}
+
+.right_button{
+  position:absolute;
+  left:15px;
+  top:15px;
+  color:#fcf9e8;
+}
+
+.left_button{
+  display:none;
+}
+
+.left_button.active{
+  position:absolute;
+  right:20px;
+  display:block;
 }
 
 
