@@ -1,0 +1,44 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "body": "첫번째",
+      "date": 1660874633437,
+      "id": 7
+    },
+    {
+      "body": "두번째",
+      "date": 1660874663022,
+      "id": 8
+    },
+    {
+      "body": "세번째",
+      "date": 1660874891126,
+      "id": 9
+    },
+    {
+      "body": "네번째",
+      "date": 1660874994166,
+      "id": 10
+    },
+    {
+      "body": "다섯번째",
+      "date": 1660875013750,
+      "id": 11
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "kyubhin": {
+    "name": "han",
+    "age": "28",
+    "height": "177"
+  }
+}
