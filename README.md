@@ -1,6 +1,9 @@
 # remember
 toy project 1. remember service
 
+구체적인 내용은 Notion에 정리해보았습니다.
+:https://boulder-barracuda-0b4.notion.site/3-1-02c736de9bef4f01aa073b158ef4baed
+
 목적 :
 1. 살아가면서 생각이 변화하는데, 예전에 어떤 주제에 대해 어떤 생각을 했는지 기록해놓으면 재미있겠다 싶어서 한 번 만들어보기로 했다.
 
@@ -18,3 +21,4 @@ toy project 1. remember service
 페이지 구성
 1. 진입 페이지(가장 처음에 페이지에 접근했을 때 보여줄 페이지)
 ![image](https://user-images.githubusercontent.com/108394338/185301375-89e9a41d-3639-4030-9c9c-18b4c362d7fd.png)
+
