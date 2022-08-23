@@ -1,82 +1,110 @@
 ; (() => {
   'use strict'
-
   const get = (element) => { return document.querySelector(element) }
+  const getAll = (element) => { return document.querySelectorAll(element) }
 
-  const $rightBtn = get('.right_button')
-  const $leftBtn = get('.left_button')
-  const $aside = get('.preSubmission')
-  const $subject = get('.subject')
-  const API_URL = 'http://localhost:3000/comments'
-  const $formInput = get('.form_input')
-  const $formBtn = get('.submit_btn')
+  const $subjectlist = get('.subjectlist');
+  const $subjects = getAll('.subjectdisplay');
+  const APIURL = 'http://localhost:3000/';
+  const $pagination = get('.pagenation');
+  const $AddSubjectbtn = get('.SubjectAddbtn');
 
+  let currentPage = 1
+  const totalCount = 53
+  const pageCount = 5
+  const limit = 5 //한 페이지 당 최대 표시할 숫자
 
-  const asideState = () => {
-    $aside.classList.toggle('active')
-    $leftBtn.classList.toggle('active')
-  }
-
-  //데이터 받아올 때 사용할 수 있음
-  const getComments = () => {
-    fetch(API_URL)
-      .then((response) => response.json())
-      .then((result) => result.reverse().forEach((item) => {
-        const element = makeprevElement(item)
-        $aside.appendChild(element)
-      }))
-      .catch((error) => console.error(error.message))
-  }
-
-  const makeprevElement = (item) => {
-    const { id, date, body } = item
-    const newdate = new Date(date)
-    const $prev = document.createElement('div')
-    $prev.classList.add('prev')
-    $prev.dataset.id = id
-    $prev.innerHTML = `
-    <div class="preDate">${newdate.getFullYear()}년 ${newdate.getMonth()}월 ${newdate.getDate()}일</div>
-    <div class="preContent">${body}</div>
-    `
-    return $prev
-  }
-
-  const addComment = (value) => {
-    const body = value
-    const date = Date.now()
-    const comment = {
-      body,
-      date
+  /**
+   * 페이지네이션을 위한 함수
+   */
+  const pagination = () => {
+    let totalPage = Math.ceil(totalCount / limit)
+    let pageGroup = Math.ceil(currentPage / pageCount)
+    let lastNumber = pageGroup * pageCount
+    if (lastNumber > totalPage) {
+      lastNumber = totalPage
     }
-    fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-type': 'application/json' },
-      body: JSON.stringify(comment),
+    let firstNumber = lastNumber - (pageCount - 1)
+
+    const next = lastNumber + 1
+    const prev = firstNumber - 1
+    let html = ''
+
+    if (prev > 0) {
+      html += "<button class='pagebtn' data-fn='prev'>이전</button> "
+    }
+
+    for (let i = firstNumber; i <= lastNumber; i++) {
+      html += `<button class="pagebtn" id="page_${i}">${i}</button>`
+    }
+    if (lastNumber < totalPage) {
+      html += `<button class='pagebtn' data-fn='next'>다음</button>`
+    }
+
+    $pagination.innerHTML = html
+    const $currentPageNumber = get(`.pagebtn#page_${currentPage}`)
+    $currentPageNumber.classList.add('focus')
+
+    const $currentPageNumbers = getAll(`.pagebtn`)
+    $currentPageNumbers.forEach((button) => {
+      button.addEventListener('click', () => {
+        if (button.dataset.fn === 'prev') {
+          currentPage = prev
+        } else if (button.dataset.fn === 'next') {
+          currentPage = next
+        } else {
+          currentPage = button.innerText
+        }
+        pagination()
+        getSubjects()
+      })
     })
-      .then((response) => response.json())
-      .catch((error) => console.error(error.message))
   }
 
-  const addValue = (e) => {
-    e.preventDefault() //새로 고침 멈출 수 있음
-    const $textarea = get('.formTextarea')
-    const InputValue = $textarea.value
-    $textarea.value = '' //입력창 초기화
-    $textarea.focus() //입력창에 바로 입력할 수 있도록 함
-    addComment(InputValue) //json-server에 값을 추가함
+  /**
+   * 주제들을 받아와서 subjectdisplay element를 만들어주는 함수
+   */
+  const CreateSubjectElement = (subject) => {
+    const { id, contents, comments } = subject
+    let SubjectElement = document.createElement('li')
+    SubjectElement.classList.add('subjectdisplay')
+    SubjectElement.innerHTML = `
+    <div class="subject">
+    ${contents}
+    </div>
+    <div class="OpinionCount">
+      <i class="fa-solid fa-shoe-prints"></i>
+      : ${comments}
+    </div>
+    `
+    return SubjectElement
+  }
+  /**
+   * 서버와 연동하여, 주제들을 가져와 표시해주는 함수
+   * 여기에 페이지 네이션을 적용시키면 될 것 같은데
+   */
+  const getSubjects = () => {
+    $subjectlist.innerHTML = ''
+    fetch(`${APIURL}subjects?_page=${currentPage}&_limit=${limit}`)
+      .then((response) => response.json())
+      .then((subjects) => subjects.forEach(subject => {
+        const SubjectElement = CreateSubjectElement(subject)
+        $subjectlist.appendChild(SubjectElement)
+      }))
+      .catch((error) => console.error(error))
+  }
+
+  const addSubject = () => {
+    console.log('hi')
   }
 
   const init = () => {
-    window.addEventListener('DOMContentLoaded', () => {
-      getComments()
-    })
-    $rightBtn.addEventListener('click', () => asideState())
-    $leftBtn.addEventListener('click', () => asideState())
-    $formInput.addEventListener('submit', (e) => {
-      addValue(e)
+    getSubjects()
+    pagination()
+    $AddSubjectbtn.addEventListener('click', () => {
+      addSubject()
     })
   }
 
   init()
-
 })()

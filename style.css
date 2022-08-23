@@ -15,12 +15,12 @@ h1{
   position:absolute;
   top:2%;
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 4em;
+  font-size: 30px;
   font-weight: 800;
 }
 
 main{
-  border: 5px solid #56445d;
+  border: 3px solid #56445d;
   height:80vh;
   width:80vw;
   margin-top: 2%;
@@ -30,46 +30,61 @@ main{
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  max-width: 1100px;
+  max-width: 400px;
+  position:relative;
 }
 
-.subject{
+.subjectlist{
   height: 100%;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: start;
+  flex-direction: column;
   align-items: center;
-  padding-top: 5%;
-  flex-wrap: wrap;
+  padding-top: 10%;
 }
 
-.subject li{
+.subjectlist li{
   height: 15%;
   width: 80%;
-  border: 3px solid #56445d;
+  border: 1px solid #56445d;
   margin-bottom: 2%;
   background-color: #8fbc94;
   border-radius: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 1.3em;
+  font-size: 10px;
   font-weight: 500;
   opacity: 0.7;
   font-style: italic;
   position:relative;
+  display: flex;
+  align-items: center;
 }
 
-.subject li:hover{
+.subjectlist li:hover{
   transform: scale(1.05);
   opacity: 1;
 }
 
+.subject{
+  width:80%;
+  height:23px;
+  padding:1% 2%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  -webkit-box-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .OpinionCount{
   position:absolute;
-  right:20px;
-  bottom:20px;
+  right:10px;
+  bottom:10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pagenation{
@@ -78,7 +93,7 @@ main{
   width: 80%;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8%;
+  margin-bottom: 15%;
 }
 
 .pagebtn{
@@ -86,9 +101,12 @@ main{
   justify-content: center;
   align-items: center;
   border: 1px solid #56445d;
-  height:40px;
+  height:20px;
   width:12%;
   font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1px;
+  border-radius: 3px;
+  background-color: #8fbc94;
 }
 
 .pagebtn:hover{
@@ -103,6 +121,77 @@ main{
   color: #fff;
 }
 
+.SubjectAddbtn{
+  position:relative;
+  left:33%;
+  bottom:10%;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 2px;
+  background-color: #8fbc94;
+  border: 1px solid #56445d;
+  border-radius: 5px;
+}
+
+.SubjectAddbtn:hover{
+  background-color: #56445d;
+  transform: scale(1.05);
+  color: #fff;
+}
+
+.addsubject.hidden{
+  display:none;
+}
+
+.addsubject{
+  position:fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  background-color: rgba(0,0,0,0.6);
+  height: 100%;
+  overflow: hidden;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.subjectInputAlarm{
+  margin-bottom: 10px;
+  background-color: #56445d;
+  color:#fff;
+  opacity: 0.8;
+  font-family: 'Noto Sans KR', sans-serif;
+  border: 1px solid #56445d;
+  border-radius: 3px;
+}
+
+.SubjectTextareaInput{
+  background-color: #8fbc94;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-style: italic;
+}
+
+.SubjectSubmitBtn{
+  display: block;
+  position:relative;
+  left:88%;
+  top:3%;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 5px;
+  height:20px;
+  width: 40px;
+  background-color: #8fbc94;
+  border: 1px solid #56445d;
+  border-radius: 5px;
+}
+
+.SubjectSubmitBtn:hover{
+  background-color: #56445d;
+  transform: scale(1.05);
+  color: #fff;
+}
+
 .OpinionPage{
   position:fixed;
   top:0;
@@ -112,8 +201,8 @@ main{
   background-color: rgba(0,0,0,0.6);
   height: 100%;
   overflow: hidden;
-  /* display:none; */
-  display:flex;
+  display:none;
+  /* display:flex; */
   justify-content: center;
   align-items: center;
 }

@@ -21,52 +21,23 @@
   <body>
     <h1 class="header">나에게로 떠나는 산책</h1>
     <main>
-      <ul class="subject">
-        <li class="subjectdisplay">
-          주제 1
-          <div class="OpinionCount">
-            <i class="fa-solid fa-shoe-prints"></i>
-            : 4
-          </div>
-        </li>
-        <li class="subjectdisplay">
-          주제 2
-          <div class="OpinionCount">
-            <i class="fa-solid fa-shoe-prints"></i>
-            : 1
-          </div>
-        </li>
-        <li class="subjectdisplay">
-          주제 3
-          <div class="OpinionCount">
-            <i class="fa-solid fa-shoe-prints"></i>
-            : 3
-          </div>
-        </li>
-        <li class="subjectdisplay">
-          주제 4
-          <div class="OpinionCount">
-            <i class="fa-solid fa-shoe-prints"></i>
-            : 0
-          </div>
-        </li>
-        <li class="subjectdisplay">
-          주제 5
-          <div class="OpinionCount">
-            <i class="fa-solid fa-shoe-prints"></i>
-            : 0
-          </div>
-        </li>
-      </ul>
-      <ul class="pagenation">
-        <li class="pagebtn">이전</li>
-        <li class="pagebtn focus">1</li>
-        <li class="pagebtn">2</li>
-        <li class="pagebtn">3</li>
-        <li class="pagebtn">4</li>
-        <li class="pagebtn">5</li>
-        <li class="pagebtn">다음</li>
-      </ul>
+      <ul class="subjectlist"></ul>
+      <section class="pagenation"></section>
+      <button class="SubjectAddbtn">주제 추가</button>
+      <div class="addsubject hidden">
+        <div class="subjectInputAlarm">추가할 주제를 입력해주세요</div>
+        <form action="" class="subject_input">
+          <textarea
+            name="content"
+            id="content"
+            cols="50"
+            rows="6"
+            placeholder="추가할 주제를 알려주세요"
+            class="SubjectTextareaInput"
+          ></textarea>
+          <input type="submit" class="SubjectSubmitBtn" />
+        </form>
+      </div>
     </main>
     <div class="OpinionPage">
       <div class="OpinionDisplay">
@@ -98,4 +69,5 @@
       </div>
     </div>
   </body>
+  <script src="script.js"></script>
 </html>

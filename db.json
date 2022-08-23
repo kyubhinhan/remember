@@ -1,49 +1,59 @@
 {
-  "posts": [
+  "subjects": [
     {
       "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "contents": "이거 글을 완전 많이 써볼까 이렇게 해도 제대로 표시가 되겠지 만약에 안되면 어떻게 해야 할까? 글을 조금 더 많이 써보자",
+      "comments": 4
+    },
+    {
+      "id": 2,
+      "contents": "주제 2",
+      "comments": 2
+    },
+    {
+      "id": 3,
+      "contents": "주제 3",
+      "comments": 0
+    },
+    {
+      "id": 4,
+      "contents": "주제 4",
+      "comments": 0
+    },
+    {
+      "id": 5,
+      "contents": "주제 5",
+      "comments": 0
+    },
+    {
+      "id": 6,
+      "contents": "주제 6",
+      "comments": 0
+    },
+    {
+      "id": 7,
+      "contents": "주제 7",
+      "comments": 0
     }
   ],
   "comments": [
     {
-      "body": "첫번째",
-      "date": 1660874633437,
-      "id": 7
+      "id": 1,
+      "relatedId" : 1,
+      "contents": "주제1와 관련된 다양한 생각",
+      "date": "작성한 날짜"
     },
     {
-      "body": "두번째",
-      "date": 1660874663022,
-      "id": 8
+      "id": 2,
+      "relatedId" : 2,
+      "contents": "주제2와 관련된 다양한 생각",
+      "date": "작성한 날짜"
     },
     {
-      "body": "세번째",
-      "date": 1660874891126,
-      "id": 9
-    },
-    {
-      "body": "네번째",
-      "date": 1660874994166,
-      "id": 10
-    },
-    {
-      "body": "다섯번째",
-      "date": 1660875013750,
-      "id": 11
-    },
-    {
-      "body": "ㅈㄷㄹㅈㄷㄹ",
-      "date": 1661134354429,
-      "id": 12
+      "id": 3,
+      "relatedId": 2,
+      "contents": "주제2와 관련된 다양한 생각",
+      "date": "작성한 날짜"
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  },
-  "kyubhin": {
-    "name": "han",
-    "age": "28",
-    "height": "177"
-  }
+  ]
 }
