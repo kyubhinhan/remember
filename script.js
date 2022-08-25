@@ -10,22 +10,34 @@
   const $AddSubjectbtn = get('.SubjectAddbtn');
 
   let currentPage = 1
-  const totalCount = 53
+  let totalCount
   const pageCount = 5
   const limit = 5 //한 페이지 당 최대 표시할 숫자
+
+  const gettotalCount = () => {
+    let result = fetch(`${APIURL}subjects`)
+      .then(response => response.json())
+    return result
+  }
 
   /**
    * 페이지네이션을 위한 함수
    */
-  const pagination = () => {
+  const pagination = async (add = 0) => {
+    //total 자료의 갯수를 받아줌
+
+    totalCount = await gettotalCount()
+    totalCount = totalCount.length
     let totalPage = Math.ceil(totalCount / limit)
     let pageGroup = Math.ceil(currentPage / pageCount)
     let lastNumber = pageGroup * pageCount
     if (lastNumber > totalPage) {
       lastNumber = totalPage
     }
-    let firstNumber = lastNumber - (pageCount - 1)
-
+    let firstNumber = lastNumber > 5 ? lastNumber - (pageCount - 1) : 1
+    if (add === 1) {
+      currentPage = totalPage
+    }
     const next = lastNumber + 1
     const prev = firstNumber - 1
     let html = ''
@@ -81,7 +93,6 @@
   }
   /**
    * 서버와 연동하여, 주제들을 가져와 표시해주는 함수
-   * 여기에 페이지 네이션을 적용시키면 될 것 같은데
    */
   const getSubjects = () => {
     $subjectlist.innerHTML = ''
@@ -94,15 +105,66 @@
       .catch((error) => console.error(error))
   }
 
-  const addSubject = () => {
-    console.log('hi')
+  const addSubjectToServer = (e) => {
+    e.preventDefault()
+    const $subjecttextareaInput = get('.SubjectTextareaInput')
+    const InputSubjectContents = $subjecttextareaInput.value
+    if (!InputSubjectContents) return
+    const subjects = {
+      "contents": InputSubjectContents,
+      "comments": 0
+    }
+    fetch(`${APIURL}subjects`, {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(subjects),
+    })
+      .then((response) => response.json())
+      .catch((error) => console.error(error.message))
+  }
+
+  /**
+   * 주제를 추가하는 함수
+   * @param {event} e 
+   */
+  const addSubject = (e) => {
+    const $AddSubjectPage = get('.addsubject')
+    const $CancleSubjectPageBtn = get('.SubjectSubmitCancleBtn')
+    const $AddSubjectForm = get('.subject_input')
+    const $subjecttextareaInput = get('.SubjectTextareaInput')
+    const $SubmitSubjectBtn = get('.SubjectSubmitBtn')
+    $AddSubjectPage.classList.remove('hidden')
+    //취소 버튼을 누르면 다시 hidden을 추가하여 가려줌
+    e.preventDefault()
+    $CancleSubjectPageBtn.addEventListener('click', (e) => {
+      e.preventDefault()
+      $AddSubjectPage.classList.add('hidden')
+      $subjecttextareaInput.value = ''
+      return
+    })
+    //키보드 'esc'를 눌러도 다시 hidden을 추가하여 가려줌
+    window.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return
+      if (e.key === 'Escape') {
+        $AddSubjectPage.classList.add('hidden')
+        $subjecttextareaInput.value = ''
+        return
+      }
+    })
+
+    $AddSubjectForm.addEventListener('submit', (e) => {
+      e.preventDefault()
+      addSubjectToServer(e)
+      pagination(1)
+    })
+
   }
 
   const init = () => {
     getSubjects()
     pagination()
-    $AddSubjectbtn.addEventListener('click', () => {
-      addSubject()
+    $AddSubjectbtn.addEventListener('click', (e) => {
+      addSubject(e)
     })
   }
 

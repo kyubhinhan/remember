@@ -42,6 +42,7 @@ main{
   flex-direction: column;
   align-items: center;
   padding-top: 10%;
+  padding-bottom: 10%;
 }
 
 .subjectlist li{
@@ -88,12 +89,13 @@ main{
 }
 
 .pagenation{
+  position:absolute;
+  bottom:11%;
   display: flex;
   height: 5%;
   width: 80%;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 15%;
 }
 
 .pagebtn{
@@ -122,9 +124,9 @@ main{
 }
 
 .SubjectAddbtn{
-  position:relative;
-  left:33%;
-  bottom:10%;
+  position:absolute;
+  right:10%;
+  bottom:5%;
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 2px;
   background-color: #8fbc94;
@@ -188,6 +190,25 @@ main{
 
 .SubjectSubmitBtn:hover{
   background-color: #56445d;
+  transform: scale(1.05);
+  color: #fff;
+}
+
+.SubjectSubmitCancleBtn{
+  position:relative;
+  left:75%;
+  bottom:9%;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 5px;
+  height:20px;
+  width: 40px;
+  background-color: #8fbc94;
+  border: 1px solid #56445d;
+  border-radius: 5px;
+}
+
+.SubjectSubmitCancleBtn:hover{
+  background-color: #420d09;
   transform: scale(1.05);
   color: #fff;
 }
