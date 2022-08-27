@@ -12,6 +12,7 @@
   const $subjecttextareaInput = get('.SubjectTextareaInput')
   const $subjectDeleteBtns = getAll('.SubjectDeleteBtn')
 
+
   let currentPage = 1
   let totalCount
   const pageCount = 5
@@ -104,35 +105,37 @@
       }))
       .catch((error) => console.error(error))
   }
-  const addSubjectToServer = () => {
+  const addSubjectToServer = (e) => {
+    e.preventDefault()
     const $subjecttextareaInput = get('.SubjectTextareaInput')
     const InputSubjectContents = $subjecttextareaInput.value
     console.log(InputSubjectContents)
-    if (InputSubjectContents === '') return
+    if (InputSubjectContents === '') {
+      hideSubjectInput()
+      return
+    }
     const subjects = {
       "contents": InputSubjectContents,
       "comments": 0
     }
-    hideSubjectInput()
     fetch(`${APIURL}subjects`, {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify(subjects),
     })
       .then((response) => response.json())
-      .then((result) => {
-        pagination()
-        getSubjects()
-      })
-      .catch((error) => console.error(error.message))
+      .then(getSubjects)
+      .then(hideSubjectInput)
+      .catch((error) => console.log(error))
   }
   /**
    * 주제를 추가하는 함수
    * @param {event} e 
    */
   const addSubject = (e) => {
-    const $SubmitSubjectBtn = get('.SubjectSubmitBtn')
     const $CancleSubjectPageBtn = get('.SubjectSubmitCancleBtn');
+    const $SubmitSubjectBtn = get('.SubjectSubmitBtn')
+
     $AddSubjectPage.classList.remove('hidden')
 
     //취소 버튼을 누르면 다시 hidden을 추가하여 가려줌
@@ -144,11 +147,10 @@
     //키보드 'enter'를 누르면 제출되도록 함
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        console.log('hi')
         hideSubjectInput()
       }
       if (e.key === 'Enter') {
-        addSubjectToServer()
+        addSubjectToServer(e)
       }
     })
     $SubmitSubjectBtn.addEventListener('click', addSubjectToServer)
@@ -168,7 +170,11 @@
         method: 'DELETE',
       })
         .then((response) => response.json())
-        .then(getSubjects)
+        .then(() => {
+          console.log(currentPage)
+          pagination()
+          getSubjects()
+        })
         .catch((error) => console.error(error.message))
     }
   }
@@ -177,14 +183,29 @@
       getSubjects()
       pagination()
     })
-    console.log('hi')
-
     //주제 추가해줌
     $AddSubjectbtn.addEventListener('click', addSubject)
 
     //주제 삭제해주기
-    $subjectlist.addEventListener('click', (e) => {
-      deletesubject(e)
+    $subjectlist.addEventListener('click', deletesubject)
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        e.stopPropagation()
+        fetch(`${APIURL}subjects`, {
+          method: 'POST',
+          headers: { 'Content-type': 'application/json' },
+          body: JSON.stringify({
+            "contents": '테스트요',
+            "comments": 0
+          }),
+        })
+          .then((response) => response.json())
+          .then(getSubjects)
+          .then(console.log('wow'))
+          .catch(error => console.log(error))
+      }
     })
   }
 
