@@ -75,7 +75,7 @@
    * 주제들을 받아와서 subjectdisplay element를 만들어주는 함수
    */
   const CreateSubjectElement = (subject) => {
-    const { id, contents, comments } = subject
+    const { id, contents, opinion } = subject
     let SubjectElement = document.createElement('li')
     SubjectElement.classList.add('subjectdisplay')
     SubjectElement.dataset.key = id
@@ -85,7 +85,7 @@
     </div>
     <div class="OpinionCount">
       <i class="fa-solid fa-shoe-prints"></i>
-      : ${comments.length}
+      : ${opinion.length}
     </div>
     <button class="SubjectDeleteBtn">
       <i class="fa-solid fa-xmark"></i>
@@ -117,7 +117,7 @@
     }
     const subjects = {
       "contents": InputSubjectContents,
-      "comments": []
+      "opinion": []
     }
     fetch(`${APIURL}subjects`, {
       method: 'POST',
@@ -193,9 +193,31 @@
     }
   }
 
+  //opinion element 만들어주는 함수
+  const createopinionelement = (element)=>{
+    //시간을 받아줌
+    let date = new Date(element.date)
+    let opinionelement = document.createElement('div')
+    opinionelement.classList.add('OpinionCase')
+    opinionelement.innerHTML=`
+    <div class="OpinionDate">${date.getFullYear()-2000}년 ${date.getMonth()}월 ${date.getDate()}일</div>
+    <div class="OpinionContent">${element.content}</div>
+    `
+
+    return opinionelement
+  }
+
+  //location에 opinion 붙여줌
+  const showopinion = (location,opinionlist)=>{
+    opinionlist.reverse().forEach((element)=>{
+      let $opinionelement = createopinionelement(element)
+      location.appendChild($opinionelement)
+    })
+  }
+
   //Opinion page element를 만들어주는 함수
   const createOpinionpageelement = (subject)=>{
-    let {id, contents, commments} = subject
+    let {id, contents, opinion} = subject
     let $opinionpageelement = document.createElement('div')
     $opinionpageelement.classList.add('OpinionDisplay')
     $opinionpageelement.innerHTML=`
@@ -213,21 +235,33 @@
         <input type="submit" class="submit_btn" />
         </form>
       </div>
-      <div class="lastOpinion">
-        <h2 class="lastOpinionTitle">지난 의견</h2>
-        <div class="OpinionCase">
-          <div class="OpinionDate">22년 8월 22일</div>
-          <div class="OpinionContent">지난 의견 2</div>
-        </div>
-        <div class="OpinionCase">
-          <div class="OpinionDate">22년 8월 20일</div>
-          <div class="OpinionContent">지난 의견 1</div>
-        </div>
-      </div>
+      <h2 class="lastOpinionTitle">지난 의견</h2>
+      <div class="lastOpinion"></div>
     </div>
+    <button class="Opinionclosebtn">닫기</button>
     `
+    const $lastopinion = $opinionpageelement.querySelector('.lastOpinion')
+    showopinion($lastopinion,opinion)
 
     return $opinionpageelement
+  }
+
+  const addopinion = (e,textarea,subject)=>{
+    let {id, contents, opinion} = subject
+    e.preventDefault()
+    const newopinion ={
+      date : Date.now(),
+      content : textarea.value
+    }
+    subject.opinion.push(newopinion)
+    fetch(`${APIURL}subjects/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(subject),
+    })
+      .then((response)=>response.json())
+      .then((result)=>console.log(result))
+      .catch((error)=>console.log(error))
   }
 
   //Opinion page를 보여주어 조작 가능하게 만드는 함수
@@ -235,7 +269,21 @@
     $OpinionPage.innerHTML = ''
     $OpinionPage.classList.toggle('hidden',false)
     $OpinionPage.appendChild(createOpinionpageelement(subject))
-    
+
+    //상호 작용을 위해 각종 버튼들을 받아줌
+    const $opinionpagecanclebtn = get('.Opinionclosebtn') //취소 버튼
+    const $opinionsubmitbtn = get('.submit_btn') //의견 제출 버튼
+    const $opiniontextarea = get('.TextareaInput') //제출한 의견
+
+    //닫기를 누른 경우, opinion page를 닫아줌
+    $opinionpagecanclebtn.addEventListener('click',()=>{
+      $opiniontextarea.value = ''
+      $OpinionPage.classList.toggle('hidden',true)
+    })
+
+    //의견 추가를 누른 경우, 의견을 추가해줌
+    $opinionsubmitbtn.addEventListener('click',(e)=>{addopinion(e,$opiniontextarea,subject)})
+
   }
 
   const addcomment = async(e)=>{
