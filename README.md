@@ -18,7 +18,4 @@ toy project 1. remember service
 3. 10개 중에서 랜덤하게 하나가 뜨고, 그에 대한 이전 대답이 있다면 이전 대답이 뜨도록 만든다.
 4. 이전 대답은 가장 최신부터 옛날까지 보이게 된다.
 
-페이지 구성
-1. 진입 페이지(가장 처음에 페이지에 접근했을 때 보여줄 페이지)
-![image](https://user-images.githubusercontent.com/108394338/185301375-89e9a41d-3639-4030-9c9c-18b4c362d7fd.png)
 
